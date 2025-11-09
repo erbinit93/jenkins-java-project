@@ -15,13 +15,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.war.failOnMissingWebXml>false</maven.war.failOnMissingWebXml>
     <docker.image.prefix>kammana</docker.image.prefix>
-
-    <!-- Testing -->
     <junit.jupiter.version>5.10.2</junit.jupiter.version>
     <surefire.version>3.2.5</surefire.version>
   </properties>
 
-  <!-- Pin JUnit versions via BOM -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -51,6 +48,14 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- Add JUnit 4 so legacy junit.framework.* tests compile/run -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -69,7 +74,6 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire.version}</version>
         <configuration>
-          <!-- Needed for JUnit 5 on Java 9+ in some layouts -->
           <useModulePath>false</useModulePath>
           <includes>
             <include>**/*Test.java</include>
